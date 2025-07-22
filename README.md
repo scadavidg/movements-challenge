@@ -5,7 +5,7 @@
 **Movements** es una aplicación Android desarrollada como parte de un challenge técnico. Permite visualizar el balance actual, ingresos, egresos y el historial de transacciones de una cuenta, todo obtenido desde una API simulada. La app está diseñada para demostrar buenas prácticas de desarrollo, arquitectura limpia y calidad de código.
 
 ### Demo
-https://github.com/user-attachments/assets/eff5f52d-d08f-4791-ac67-55b7d3cb0681
+https://github.com/user-attachments/assets/2abf7e64-1a96-44e6-a899-00b7648bb60b
 
 ## Características
 
@@ -78,7 +78,7 @@ El reporte estará disponible en:
 `app/build/reports/jacoco/jacocoTestReport/html/index.html`
 
 ### Estado de las Pruebas
-<img width="1875" height="410" alt="image" src="https://github.com/user-attachments/assets/005debc4-2464-4ec6-83cc-43209e5511b2" />
+<img width="1885" height="386" alt="image" src="https://github.com/user-attachments/assets/fe27c46d-fbc4-4a21-af4a-88fccb9ed45e" />
 
 - **Ubicación de tests:**  
   - Lógica de negocio: `domain/src/test/`
