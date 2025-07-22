@@ -3,19 +3,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.app.ui.components.IncomeExpenseCardComposable
 import com.app.ui.Strings
+import com.app.ui.boldDisplayLarge
+import com.app.ui.components.IncomeExpenseCardComposable
+import com.app.ui.height24
+import com.app.ui.height8
+import com.app.ui.smallBodySmall
+import com.app.ui.toCurrencyString
 
 @Composable
 fun BalanceHeaderComposable(
@@ -33,23 +35,19 @@ fun BalanceHeaderComposable(
     ) {
         Text(
             text = Strings.CURRENT_BALANCE,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.smallBodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height8())
 
         Text(
-            text = "$${"%,.2f".format(balance)}",
-            style =
-                MaterialTheme.typography.displayLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 36.sp,
-                ),
+            text = balance.toCurrencyString(withSymbol = true),
+            style = MaterialTheme.typography.boldDisplayLarge,
             color = MaterialTheme.colorScheme.onSurface,
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height24())
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -79,4 +77,3 @@ fun BalanceHeaderComposablePreview() {
         totalExpenses = -970.75,
     )
 }
-

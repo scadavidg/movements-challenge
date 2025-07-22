@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,7 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.ui.components.SkeletonItemComposable
+import com.app.ui.components.SkeletonHeaderComposable
 import com.app.ui.components.TransactionItemComposable
+import com.app.ui.horizontalPadding16
+import com.app.ui.padding16
 import com.app.ui.state.MovementsUiState
 import com.app.ui.viewmodel.MovementsViewModel
 import com.domain.models.AccountSummary
@@ -43,11 +46,15 @@ fun MovementsListComposable(modifier: Modifier) {
     ) {
         when (val currentState = state) {
             is MovementsUiState.Loading -> {
-                Column {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    SkeletonHeaderComposable()
+                    Spacer(modifier = Modifier.height(16.dp))
                     repeat(5) {
                         SkeletonItemComposable()
                         Spacer(modifier = Modifier.height(8.dp))
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    CircularProgressIndicator()
                 }
             }
 
@@ -60,7 +67,7 @@ fun MovementsListComposable(modifier: Modifier) {
                     )
 
                     HorizontalDivider(
-                        modifier = Modifier.padding(horizontal = 16.dp),
+                        modifier = Modifier.horizontalPadding16(),
                         thickness = 1.dp,
                         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 1f),
                     )
@@ -68,7 +75,7 @@ fun MovementsListComposable(modifier: Modifier) {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     LazyColumn(
-                        modifier = Modifier.padding(horizontal = 16.dp),
+                        modifier = Modifier.horizontalPadding16(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         items(transactions) { transaction ->
@@ -97,11 +104,15 @@ fun MovementsListComposable(modifier: Modifier) {
 @Composable
 fun MovementsListComposablePreviewLoading() {
     MaterialTheme {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding16(), horizontalAlignment = Alignment.CenterHorizontally) {
+            SkeletonHeaderComposable()
+            Spacer(modifier = Modifier.height(16.dp))
             repeat(3) {
                 SkeletonItemComposable()
                 Spacer(modifier = Modifier.height(8.dp))
             }
+            Spacer(modifier = Modifier.height(16.dp))
+            CircularProgressIndicator()
         }
     }
 }
@@ -132,7 +143,7 @@ fun MovementsListComposablePreviewSuccess() {
                 totalExpenses = sampleData.totalExpenses,
             )
             LazyColumn(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.horizontalPadding16(),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(sampleData.transactions) {
@@ -143,20 +154,18 @@ fun MovementsListComposablePreviewSuccess() {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun MovementsListComposablePreviewError() {
     MaterialTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = com.app.ui.Strings.ERROR_LOAD,
-                color = MaterialTheme.colorScheme.error
+                color = MaterialTheme.colorScheme.error,
             )
         }
     }
 }
-

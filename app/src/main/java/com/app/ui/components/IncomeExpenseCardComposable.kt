@@ -8,12 +8,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlin.math.absoluteValue
 import com.app.ui.Strings
+import com.app.ui.boldTitleMedium
+import com.app.ui.smallBodySmall
+import com.app.ui.toColor
+import com.app.ui.toCurrencyString
+import com.domain.models.TransactionType
 
 @Composable
 fun IncomeExpenseCardComposable(
@@ -22,7 +24,7 @@ fun IncomeExpenseCardComposable(
     isIncome: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val color = if (isIncome) Color(0xFF51BF72) else Color(0xFFBF5153)
+    val color = if (isIncome) TransactionType.INCOME.toColor() else TransactionType.EXPENSE.toColor()
 
     Column(
         modifier = modifier,
@@ -30,18 +32,15 @@ fun IncomeExpenseCardComposable(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.smallBodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = "%,.2f".format(amount.absoluteValue),
-            style =
-                MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                ),
+            text = amount.toCurrencyString(),
+            style = MaterialTheme.typography.boldTitleMedium,
             color = color,
         )
     }

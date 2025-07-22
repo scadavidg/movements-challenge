@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -18,6 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.app.ui.height12
+import com.app.ui.height16
+import com.app.ui.height20
+import com.app.ui.height8
+import com.app.ui.horizontalPadding16
+import com.app.ui.padding16
+import com.app.ui.width60
 
 @Composable
 fun SkeletonItemComposable() {
@@ -25,7 +29,7 @@ fun SkeletonItemComposable() {
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .horizontalPadding16(),
         shape = RoundedCornerShape(12.dp),
         colors =
             CardDefaults.cardColors(
@@ -33,7 +37,7 @@ fun SkeletonItemComposable() {
             ),
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding16(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
@@ -41,15 +45,15 @@ fun SkeletonItemComposable() {
                     modifier =
                         Modifier
                             .fillMaxWidth(0.6f)
-                            .height(16.dp)
+                            .height16()
                             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(4.dp)),
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height8())
                 Box(
                     modifier =
                         Modifier
                             .fillMaxWidth(0.4f)
-                            .height(12.dp)
+                            .height12()
                             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(4.dp)),
                 )
             }
@@ -57,8 +61,8 @@ fun SkeletonItemComposable() {
             Box(
                 modifier =
                     Modifier
-                        .width(60.dp)
-                        .height(20.dp)
+                        .width60()
+                        .height20()
                         .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(4.dp)),
             )
         }
@@ -70,4 +74,3 @@ fun SkeletonItemComposable() {
 fun SkeletonItemComposablePreview() {
     SkeletonItemComposable()
 }
-

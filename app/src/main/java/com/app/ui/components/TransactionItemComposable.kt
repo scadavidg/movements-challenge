@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -15,11 +13,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.app.ui.boldBodyLarge
+import com.app.ui.height4
+import com.app.ui.normalBodyLarge
+import com.app.ui.padding16
+import com.app.ui.smallBodySmall
+import com.app.ui.toColor
+import com.app.ui.toCurrencyString
+import com.app.ui.toFriendlyDate
+import com.app.ui.verticalPadding4
 import com.domain.models.Transaction
 import com.domain.models.TransactionType
 
@@ -28,18 +32,13 @@ fun TransactionItemComposable(
     transaction: Transaction,
     modifier: Modifier = Modifier,
 ) {
-    val amountColor =
-        when (transaction.type) {
-            TransactionType.INCOME -> Color(0xFF51BF72) // Verde más brillante
-            TransactionType.EXPENSE -> Color(0xFFBF5153) // Rojo más brillante
-            else -> MaterialTheme.colorScheme.onSurface
-        }
+    val amountColor = transaction.type.toColor()
 
     Card(
         modifier =
             modifier
                 .fillMaxWidth()
-                .padding(vertical = 4.dp),
+                .verticalPadding4(),
         shape = RoundedCornerShape(12.dp),
         colors =
             CardDefaults.cardColors(
@@ -51,36 +50,28 @@ fun TransactionItemComposable(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding16(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Column {
                 Text(
                     text = transaction.name,
-                    style =
-                        MaterialTheme.typography.bodyLarge.copy(
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                        ),
+                    style = MaterialTheme.typography.normalBodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height4())
                 Text(
-                    text = transaction.date,
-                    style = MaterialTheme.typography.bodySmall,
+                    text = transaction.date.toFriendlyDate(),
+                    style = MaterialTheme.typography.smallBodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
             Text(
-                text = "${transaction.amount}",
+                text = transaction.amount.toCurrencyString(),
                 color = amountColor,
-                style =
-                    MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                    ),
+                style = MaterialTheme.typography.boldBodyLarge,
             )
         }
     }
@@ -89,26 +80,27 @@ fun TransactionItemComposable(
 @Preview(showBackground = true)
 @Composable
 fun TransactionItemComposablePreviewExpense() {
-    val sampleTransaction = Transaction(
-        id = 1,
-        name = "Compra Supermercado",
-        amount = -120.75,
-        date = "2024-07-16",
-        type = TransactionType.EXPENSE,
-    )
+    val sampleTransaction =
+        Transaction(
+            id = 1,
+            name = "Compra Supermercado",
+            amount = -120.75,
+            date = "2024-07-16",
+            type = TransactionType.EXPENSE,
+        )
     TransactionItemComposable(transaction = sampleTransaction)
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TransactionItemComposablePreviewIncome() {
-    val sampleTransaction = Transaction(
-        id = 1,
-        name = "Compra Supermercado",
-        amount = 120.75,
-        date = "2024-07-16",
-        type = TransactionType.INCOME,
-    )
+    val sampleTransaction =
+        Transaction(
+            id = 1,
+            name = "Compra Supermercado",
+            amount = 120.75,
+            date = "2024-07-16",
+            type = TransactionType.INCOME,
+        )
     TransactionItemComposable(transaction = sampleTransaction)
 }
-
