@@ -5,7 +5,7 @@
 **Movements** es una aplicación Android desarrollada como parte de un challenge técnico. Permite visualizar el balance actual, ingresos, egresos y el historial de transacciones de una cuenta, todo obtenido desde una API simulada. La app está diseñada para demostrar buenas prácticas de desarrollo, arquitectura limpia y calidad de código.
 
 ### Demo
-https://github.com/user-attachments/assets/2abf7e64-1a96-44e6-a899-00b7648bb60b
+https://github.com/user-attachments/assets/92fb627a-e8c9-4db8-9b60-294996dde643
 
 ## Características
 
