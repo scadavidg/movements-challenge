@@ -185,6 +185,17 @@ class GetAccountSummaryUseCaseImplTest {
         }
 
     @Test
+    fun `CalculateTotalIncomeUseCase throws exception with null message`() =
+        runTest {
+            whenever(repository.getAccountDetail()).thenReturn(Result.Success(AccountDetail(0.0, sampleTransactions)))
+            whenever(calculateIncome(any())).thenThrow(RuntimeException(null as String?))
+
+            val result = useCase()
+            assertTrue(result is Result.Error)
+            assertEquals("Unexpected error during calculation", (result as Result.Error).message)
+        }
+
+    @Test
     fun `CalculateTotalExpensesUseCase throws exception`() =
         runTest {
             whenever(repository.getAccountDetail()).thenReturn(Result.Success(AccountDetail(0.0, sampleTransactions)))
@@ -194,6 +205,18 @@ class GetAccountSummaryUseCaseImplTest {
             val result = useCase()
             assertTrue(result is Result.Error)
             assertEquals("Expenses failure", (result as Result.Error).message)
+        }
+
+    @Test
+    fun `calculateTotalExpensesUseCase throws exception with null message`() =
+        runTest {
+            whenever(repository.getAccountDetail()).thenReturn(Result.Success(AccountDetail(0.0, sampleTransactions)))
+            whenever(calculateIncome(any())).thenReturn(1000.0)
+            whenever(calculateExpenses(any())).thenThrow(RuntimeException(null as String?))
+
+            val result = useCase()
+            assertTrue(result is Result.Error)
+            assertEquals("Unexpected error during calculation", (result as Result.Error).message)
         }
 
     @Test
