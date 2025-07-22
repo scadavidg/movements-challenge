@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "movements"
 include(":app")
- 
+include(":domain")
+include(":data")
