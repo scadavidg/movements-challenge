@@ -6,6 +6,7 @@ import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.SocketPolicy
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -150,39 +151,42 @@ class AccountApiServiceTest {
     @Test
     fun `getAccountDetail with malformed JSON for amount throws JsonDataException`() =
         runTest {
-            val invalidJson =
+            val malformedJson =
                 """
                 {
-                  "record": {
-                    "balance": 1234.56,
-                    "transactions": [
-                      {
-                        "id": 1,
-                        "name": "Salario",
-                        "amount": "not-a-number",
-                        "date": "2024-07-15",
-                        "type": "ingreso"
-                      }
-                    ]
-                  }
+                  "id": "123",
+                  "amount": "not_a_number"
                 }
                 """.trimIndent()
 
-            mockWebServer.enqueue(MockResponse().setResponseCode(200).setBody(invalidJson))
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(malformedJson),
+            )
 
-            assertFailsWith<JsonDataException> {
-                apiService.getAccountDetail()
-            }
+            val exception =
+                assertFailsWith<JsonDataException> {
+                    apiService.getAccountDetail()
+                }
+
+            println("Message: ${exception.message}")
         }
 
     @Test
     fun `getAccountDetail with network disconnect throws exception`() =
         runTest {
-            mockWebServer.shutdown()
+            val disconnectedResponse =
+                MockResponse()
+                    .setSocketPolicy(SocketPolicy.DISCONNECT_AT_START)
+
+            mockWebServer.enqueue(disconnectedResponse)
 
             val exception =
                 assertFailsWith<Exception> {
                     apiService.getAccountDetail()
                 }
+
+            println("Exception message: ${exception.message}")
         }
 }

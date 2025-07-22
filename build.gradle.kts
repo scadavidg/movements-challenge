@@ -21,7 +21,7 @@ ktlint {
 
 buildscript {
     dependencies {
-        classpath(libs.org.jacoco.core) // o la última versión
+        classpath(libs.org.jacoco.core)
     }
 }
 

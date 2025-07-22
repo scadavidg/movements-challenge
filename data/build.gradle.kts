@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
     id("kotlin-kapt")
-    id("jacoco")
 }
 
 android {
@@ -33,25 +33,29 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-
-    // DI
-    implementation(libs.hilt.android)
-    kapt(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.core.ktx)
 
     // Retrofit and Networking
     implementation(libs.retrofit)
     implementation(libs.converter.moshi)
-    kapt(libs.moshi.kotlin.codegen)
     implementation(libs.moshi.kotlin)
+    kapt(libs.moshi.kotlin.codegen)
+
+    // Dependency Injection (Hilt)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.mockwebserver)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(kotlin("test"))
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockito.kotlin)
+}
+
+kapt {
+    correctErrorTypes = true
 }
